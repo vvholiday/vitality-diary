@@ -177,6 +177,7 @@ const recordsByDate = useMemo(() => {
         <div>📊 记录: {records.length}条 | 项目: {dbItems.length}个 | 总分: {totalPossibleScore}分</div>
         <div>📅 有打卡: {Object.keys(recordsByDate).length}天 | 今日得分: {getDayScore(formatDate(today))}分</div>
         <div>🔍 项目详情: {dbItems.slice(0, 3).map((i: any) => `${i.name}=${i.score}分(${i.is_active?'启用':'停用'})`).join(', ')}</div>
+        <div>🧪 手动合计: {dbItems.filter((i: any) => i.is_active).reduce((s: any, i: any) => s + Number(i.score || 0), 0)}</div>
       </div>
 
       {/* 雷达图：每日分类完成率 */}
