@@ -55,7 +55,14 @@ export default function AdminItemsPage() {
   };
 
   const handleAdd = async () => {
-    if (!newItem.name.trim() || !newItem.category_id) return;
+    if (!newItem.category_id) {
+      alert('请先选择所属分类');
+      return;
+    }
+    if (!newItem.name.trim()) {
+      alert('请输入项目名称');
+      return;
+    }
     try {
     const result = await createItem({
       category_id: newItem.category_id,
@@ -147,7 +154,7 @@ export default function AdminItemsPage() {
         <div className="bg-amber-50 rounded-2xl border border-amber-200 p-4 space-y-3">
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-[10px] text-amber-700 font-medium mb-1">所属分类</label>
+              <label className="block text-[10px] text-amber-700 font-medium mb-1">所属分类 <span className="text-red-500">*必填</span></label>
               <select
                 value={newItem.category_id}
                 onChange={(e) => setNewItem({ ...newItem, category_id: e.target.value })}
