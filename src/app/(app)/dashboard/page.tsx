@@ -41,11 +41,12 @@ export default function DashboardPage() {
 
   // Load check-ins when date or user changes
   useEffect(() => {
-    if (!user) return;
+    const u = user;
+    if (!u) return;
     async function loadCheckIns() {
       setPageLoading(true);
       try {
-        const checkIns = await fetchCheckInsByDate(user.id, dateStr);
+        const checkIns = await fetchCheckInsByDate(u.id, dateStr);
         const loaded: Record<string, any> = {};
         const ui: Record<string, { done: boolean; value: number | null }> = {};
         checkIns.forEach((ci: any) => {
@@ -124,14 +125,15 @@ export default function DashboardPage() {
   };
 
   const handleSave = async () => {
-    if (!user || saving) return;
+    const u = user;
+    if (!u || saving) return;
     setSaving(true);
     try {
       const promises: Promise<any>[] = [];
       for (const [itemId, rec] of Object.entries(records)) {
         if (rec.done) {
           promises.push(upsertCheckIn({
-            user_id: user.id,
+            user_id: u.id,
             item_id: itemId,
             check_date: dateStr,
             value: rec.value,
@@ -139,7 +141,7 @@ export default function DashboardPage() {
           }));
         } else if (loadedRecords[itemId]) {
           // Was previously saved but now unchecked → delete
-          promises.push(deleteCheckIn(user.id, itemId, dateStr));
+          promises.push(deleteCheckIn(u.id, itemId, dateStr));
         }
       }
       await Promise.all(promises);
