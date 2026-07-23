@@ -226,7 +226,7 @@ export default function StatsPage() {
                   />
                   <Tooltip
                     contentStyle={{ fontSize: 12, borderRadius: 8, border: '1px solid #e5e7eb' }}
-                    formatter={(value: number) => [`${value}%`, '完成率']}
+                    formatter={(value: any) => [`${value}%`, '完成率']}
                   />
                   <Area
                     type="monotone"
