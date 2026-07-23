@@ -172,6 +172,12 @@ const recordsByDate = useMemo(() => {
         </div>
       </div>
 
+      {/* Debug info */}
+      <div className="text-[10px] text-gray-400 px-1 space-y-0.5">
+        <div>📊 记录: {records.length}条 | 项目: {dbItems.length}个 | 总分: {totalPossibleScore}分</div>
+        <div>📅 有打卡: {Object.keys(recordsByDate).length}天 | 今日得分: {getDayScore(formatDate(today))}分</div>
+      </div>
+
       {/* 雷达图：每日分类完成率 */}
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
         <div className="flex items-center justify-between mb-3">
