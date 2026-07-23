@@ -159,12 +159,12 @@ const recordsByDate = useMemo(() => {
                   {day}
                 </span>
                 {dayScore > 0 && (
-                  <div className={`mt-0.5 w-5 h-5 rounded-full flex items-center justify-center text-[9px] font-bold ${colorClass}`}>
+                  <div className={`mt-0.5 w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-bold ${colorClass}`}>
                     {getDayPercent(dateStr) >= 80 ? '✓' : getDayPercent(dateStr) >= 50 ? '−' : '·'}
                   </div>
                 )}
                 {dayScore === 0 && (
-                  <div className="mt-0.5 w-5 h-5 rounded-full flex items-center justify-center text-[9px] text-gray-300">·</div>
+                  <div className="mt-0.5 w-6 h-6 rounded-full flex items-center justify-center text-[11px] text-gray-300">·</div>
                 )}
               </button>
             );
