@@ -33,8 +33,8 @@ export default function AdminItemsPage() {
 
   const sorted = [...filtered].sort((a, b) => {
     if (a.category_id !== b.category_id) {
-      const aCat = mockCategories.find(c => c.id === a.category_id);
-      const bCat = mockCategories.find(c => c.id === b.category_id);
+      const aCat = dbCategories.find(c => c.id === a.category_id);
+      const bCat = dbCategories.find(c => c.id === b.category_id);
       return (aCat?.sort_order || 0) - (bCat?.sort_order || 0);
     }
     return a.sort_order - b.sort_order;
