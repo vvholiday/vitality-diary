@@ -3,7 +3,7 @@ import { createClient } from './client';
 // ========== 分类 & 项目 ==========
 
 export async function fetchActiveCategories() {
-  const supabase = createClient();
+  const supabase = createClient() as any;
   const { data, error } = await supabase
     .from('categories')
     .select('*')
@@ -14,7 +14,7 @@ export async function fetchActiveCategories() {
 }
 
 export async function fetchActiveItems() {
-  const supabase = createClient();
+  const supabase = createClient() as any;
   const { data, error } = await supabase
     .from('items')
     .select('*')
@@ -25,7 +25,7 @@ export async function fetchActiveItems() {
 }
 
 export async function fetchAllCategories() {
-  const supabase = createClient();
+  const supabase = createClient() as any;
   const { data, error } = await supabase
     .from('categories')
     .select('*')
@@ -35,7 +35,7 @@ export async function fetchAllCategories() {
 }
 
 export async function fetchAllItems() {
-  const supabase = createClient();
+  const supabase = createClient() as any;
   const { data, error } = await supabase
     .from('items')
     .select('*, categories(name)')
@@ -45,20 +45,20 @@ export async function fetchAllItems() {
 }
 
 export async function createCategory(data: { name: string; emoji_icon?: string; sort_order?: number }) {
-  const supabase = createClient();
+  const supabase = createClient() as any;
   const { data: result, error } = await supabase.from('categories').insert(data).select().single();
   if (error) throw error;
   return result;
 }
 
 export async function updateCategory(id: string, data: { name?: string; emoji_icon?: string; sort_order?: number; is_active?: boolean }) {
-  const supabase = createClient();
+  const supabase = createClient() as any;
   const { error } = await supabase.from('categories').update(data).eq('id', id);
   if (error) throw error;
 }
 
 export async function deleteCategory(id: string) {
-  const supabase = createClient();
+  const supabase = createClient() as any;
   const { error } = await supabase.from('categories').delete().eq('id', id);
   if (error) throw error;
 }
@@ -67,7 +67,7 @@ export async function createItem(data: {
   category_id: string; name: string; type?: string; unit?: string | null;
   score?: number; description?: string; sort_order?: number;
 }) {
-  const supabase = createClient();
+  const supabase = createClient() as any;
   const { data: result, error } = await supabase.from('items').insert(data).select().single();
   if (error) throw error;
   return result;
@@ -77,13 +77,13 @@ export async function updateItem(id: string, data: {
   name?: string; type?: string; unit?: string | null;
   score?: number; description?: string; sort_order?: number; is_active?: boolean;
 }) {
-  const supabase = createClient();
+  const supabase = createClient() as any;
   const { error } = await supabase.from('items').update(data).eq('id', id);
   if (error) throw error;
 }
 
 export async function deleteItem(id: string) {
-  const supabase = createClient();
+  const supabase = createClient() as any;
   const { error } = await supabase.from('items').delete().eq('id', id);
   if (error) throw error;
 }
@@ -91,7 +91,7 @@ export async function deleteItem(id: string) {
 // ========== 打卡记录 ==========
 
 export async function fetchCheckInsByDate(userId: string, date: string) {
-  const supabase = createClient();
+  const supabase = createClient() as any;
   const { data, error } = await supabase
     .from('check_ins')
     .select('*')
@@ -102,7 +102,7 @@ export async function fetchCheckInsByDate(userId: string, date: string) {
 }
 
 export async function fetchCheckInsByDateRange(userId: string, startDate: string, endDate: string) {
-  const supabase = createClient();
+  const supabase = createClient() as any;
   const { data, error } = await supabase
     .from('check_ins')
     .select('*')
@@ -123,7 +123,7 @@ type CheckInInput = {
 };
 
 export async function upsertCheckIn(input: CheckInInput) {
-  const supabase = createClient();
+  const supabase = createClient() as any;
   const { error } = await supabase.from('check_ins').upsert(input, {
     onConflict: 'user_id,item_id,check_date',
   });
@@ -131,7 +131,7 @@ export async function upsertCheckIn(input: CheckInInput) {
 }
 
 export async function deleteCheckIn(userId: string, itemId: string, date: string) {
-  const supabase = createClient();
+  const supabase = createClient() as any;
   const { error } = await supabase
     .from('check_ins')
     .delete()
@@ -142,7 +142,7 @@ export async function deleteCheckIn(userId: string, itemId: string, date: string
 }
 
 export async function fetchAllUsers() {
-  const supabase = createClient();
+  const supabase = createClient() as any;
   const { data, error } = await supabase
     .from('profiles')
     .select('*')

@@ -22,8 +22,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   // Listen for auth state changes
   useEffect(() => {
-    const supabase = createClient();
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+    const supabase = createClient() as any;
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event: any, session: any) => {
       if (session?.user) {
         // Fetch profile from profiles table
         const { data: profile } = await supabase
@@ -44,7 +44,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     });
 
     // Check existing session
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    supabase.auth.getSession().then(({ data: { session } }: any) => {
       if (!session) setLoading(false);
     });
 
@@ -52,7 +52,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const login = useCallback(async (email: string, password: string) => {
-    const supabase = createClient();
+    const supabase = createClient() as any;
     const { data, error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) return error.message;
     // Set user directly so the UI updates immediately (before onAuthStateChange fires)
@@ -73,7 +73,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const register = useCallback(async (email: string, nickname: string, password: string) => {
-    const supabase = createClient();
+    const supabase = createClient() as any;
     // First register with Supabase Auth (trigger will create profile)
     const { data, error } = await supabase.auth.signUp({
       email,
@@ -90,7 +90,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const logout = useCallback(async () => {
-    const supabase = createClient();
+    const supabase = createClient() as any;
     await supabase.auth.signOut();
     setUser(null);
   }, []);
