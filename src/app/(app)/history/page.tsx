@@ -58,9 +58,15 @@ const recordsByDate = useMemo(() => {
     return map;
   }, [records, dbItems]);
 
-  const calcTotalScore() = useMemo(() =>
-    dbItems.filter((i: any) => i.is_active).reduce((s: number, i: any) => s + i.score, 0),
-  []);
+  const calcTotalScore = () => {
+    let sum = 0;
+    for (const item of dbItems) {
+      if (item.is_active) {
+        sum += Number(item.score) || 0;
+      }
+    }
+    return sum;
+  };
 
   const getDayScore = (dateStr: string) => recordsByDate[dateStr] || 0;
   const getDayPercent = (dateStr: string) =>
