@@ -268,8 +268,20 @@ export default function AdminItemsPage() {
                 <div key={item.id} className="px-5 py-3 flex items-center gap-3 hover:bg-gray-50/50 transition-colors">
                   <GripVertical size={14} className="text-gray-300 shrink-0" />
 
-                  {/* Category badge */}
-                  <span className="text-xs shrink-0">{getCategoryEmoji(item.category_id)}</span>
+                  {/* Category badge / edit */}
+                  {isEditing ? (
+                    <select
+                      defaultValue={item.category_id}
+                      onChange={(e) => handleSaveEdit(item.id, 'category_id', e.target.value)}
+                      className="text-xs px-1 py-0.5 rounded border border-gray-200 bg-white shrink-0"
+                    >
+                      {dbCategories.filter((c: any) => c.is_active).map((cat: any) => (
+                        <option key={cat.id} value={cat.id}>{cat.emoji_icon} {cat.name}</option>
+                      ))}
+                    </select>
+                  ) : (
+                    <span className="text-xs shrink-0">{getCategoryEmoji(item.category_id)}</span>
+                  )}
 
                   {/* Name */}
                   {isEditing ? (
@@ -289,14 +301,46 @@ export default function AdminItemsPage() {
 
                   {/* Details */}
                   <div className="flex items-center gap-2 shrink-0">
-                    <span className={`text-[10px] px-1.5 py-0.5 rounded ${
-                      item.type === 'numeric'
-                        ? 'bg-blue-50 text-blue-600'
-                        : 'bg-gray-100 text-gray-500'
-                    }`}>
-                      {item.type === 'numeric' ? `${item.unit || '次'}` : '✓/✗'}
-                    </span>
-                    <span className="text-xs text-emerald-600 font-medium">+{item.score}分</span>
+                    {isEditing ? (
+                      <>
+                        <select
+                          defaultValue={item.type}
+                          onChange={(e) => handleSaveEdit(item.id, 'type', e.target.value)}
+                          className="text-[10px] px-1.5 py-0.5 rounded border border-gray-200 bg-white"
+                        >
+                          <option value="toggle">✓/✗</option>
+                          <option value="numeric">数值</option>
+                        </select>
+                        {item.type === 'numeric' && (
+                          <input
+                            type="text"
+                            defaultValue={item.unit || ''}
+                            onBlur={(e) => handleSaveEdit(item.id, 'unit', e.target.value || null)}
+                            className="w-12 text-[10px] px-1.5 py-0.5 rounded border border-gray-200"
+                            placeholder="单位"
+                          />
+                        )}
+                        <input
+                          type="number"
+                          defaultValue={item.score}
+                          onBlur={(e) => handleSaveEdit(item.id, 'score', parseInt(e.target.value) || 0)}
+                          className="w-14 text-xs px-1.5 py-0.5 rounded border border-gray-200"
+                          min={0}
+                        />
+                        <span className="text-[10px] text-gray-400">分</span>
+                      </>
+                    ) : (
+                      <>
+                        <span className={`text-[10px] px-1.5 py-0.5 rounded ${
+                          item.type === 'numeric'
+                            ? 'bg-blue-50 text-blue-600'
+                            : 'bg-gray-100 text-gray-500'
+                        }`}>
+                          {item.type === 'numeric' ? `${item.unit || '次'}` : '✓/✗'}
+                        </span>
+                        <span className="text-xs text-emerald-600 font-medium">+{item.score}分</span>
+                      </>
+                    )}
                   </div>
 
                   {/* Status */}
