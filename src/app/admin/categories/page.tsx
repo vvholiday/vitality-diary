@@ -34,7 +34,6 @@ export default function AdminCategoriesPage() {
       sort_order: newCat.sort_order,
     });
     setCategories(prev => [...prev, result]);
-    setCategories(prev => [...prev, cat]);
     setNewCat({ name: '', emoji_icon: '📋', sort_order: categories.length + 2 });
     setIsAdding(false);
   };
