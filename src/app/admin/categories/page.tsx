@@ -28,7 +28,6 @@ export default function AdminCategoriesPage() {
 
   const handleAdd = async () => {
     if (!newCat.name.trim()) return;
-    try {
     const result = await createCategory({
       name: newCat.name,
       emoji_icon: newCat.emoji_icon,
