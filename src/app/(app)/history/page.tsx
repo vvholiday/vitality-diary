@@ -58,13 +58,13 @@ const recordsByDate = useMemo(() => {
     return map;
   }, [records, dbItems]);
 
-  const totalPossibleScore = useMemo(() =>
+  const calcTotalScore() = useMemo(() =>
     dbItems.filter((i: any) => i.is_active).reduce((s: number, i: any) => s + i.score, 0),
   []);
 
   const getDayScore = (dateStr: string) => recordsByDate[dateStr] || 0;
   const getDayPercent = (dateStr: string) =>
-    totalPossibleScore > 0 ? Math.round((getDayScore(dateStr) / totalPossibleScore) * 100) : 0;
+    calcTotalScore() > 0 ? Math.round((getDayScore(dateStr) / calcTotalScore()) * 100) : 0;
 
   const getDayColor = (dateStr: string) => {
     const pct = getDayPercent(dateStr);
@@ -174,7 +174,7 @@ const recordsByDate = useMemo(() => {
 
       {/* Debug info */}
       <div className="text-[10px] text-gray-400 px-1 space-y-0.5">
-        <div>📊 记录: {records.length}条 | 项目: {dbItems.length}个 | 总分: {totalPossibleScore}分</div>
+        <div>📊 记录: {records.length}条 | 项目: {dbItems.length}个 | 总分: {calcTotalScore()}分</div>
         <div>📅 有打卡: {Object.keys(recordsByDate).length}天 | 今日得分: {getDayScore(formatDate(today))}分</div>
         <div>🔍 项目详情: {dbItems.slice(0, 3).map((i: any) => `${i.name}=${i.score}分(${i.is_active?'启用':'停用'})`).join(', ')}</div>
         <div>🧪 手动合计: {dbItems.filter((i: any) => i.is_active).reduce((s: any, i: any) => s + Number(i.score || 0), 0)}</div>
@@ -220,7 +220,7 @@ const recordsByDate = useMemo(() => {
               {formatDateCN(selectedDate)} 打卡详情
             </h3>
             <span className="text-xs text-gray-400">
-              得分：{getDayScore(selectedDate)} / {totalPossibleScore}
+              得分：{getDayScore(selectedDate)} / {calcTotalScore()}
             </span>
           </div>
 
