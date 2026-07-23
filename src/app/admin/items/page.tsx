@@ -56,6 +56,7 @@ export default function AdminItemsPage() {
 
   const handleAdd = async () => {
     if (!newItem.name.trim() || !newItem.category_id) return;
+    try {
     const result = await createItem({
       category_id: newItem.category_id,
       name: newItem.name,
@@ -76,6 +77,9 @@ export default function AdminItemsPage() {
       sort_order: items.length + 2,
     });
     setIsAdding(false);
+    } catch (e: any) {
+      alert('保存失败：' + (e?.message || '未知错误'));
+    }
   };
 
   const handleSaveEdit = async (id: string, field: string, value: any) => {
