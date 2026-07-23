@@ -46,7 +46,7 @@ export default function DashboardPage() {
     async function loadCheckIns() {
       setPageLoading(true);
       try {
-        const checkIns = await fetchCheckInsByDate(currentUserId, dateStr);
+        const checkIns = await fetchCheckInsByDate(currentUserId as string, dateStr);
         const loaded: Record<string, any> = {};
         const ui: Record<string, { done: boolean; value: number | null }> = {};
         checkIns.forEach((ci: any) => {
@@ -125,7 +125,7 @@ export default function DashboardPage() {
   };
 
   const handleSave = async () => {
-    const u = user?.id;
+    const u = user?.id as string;
     if (!u || saving) return;
     setSaving(true);
     try {
