@@ -285,17 +285,29 @@ export default function AdminItemsPage() {
 
                   {/* Name */}
                   {isEditing ? (
-                    <input
-                      type="text"
-                      defaultValue={item.name}
-                      onBlur={(e) => handleSaveEdit(item.id, 'name', e.target.value)}
-                      className="flex-1 px-2 py-1 rounded border border-gray-200 text-sm"
-                      autoFocus
-                    />
+                    <div className="flex-1 min-w-0 space-y-1">
+                      <input
+                        type="text"
+                        defaultValue={item.name}
+                        onBlur={(e) => handleSaveEdit(item.id, 'name', e.target.value)}
+                        className="w-full px-2 py-1 rounded border border-gray-200 text-sm"
+                        autoFocus
+                      />
+                      <input
+                        type="text"
+                        defaultValue={item.description || ''}
+                        onBlur={(e) => handleSaveEdit(item.id, 'description', e.target.value)}
+                        className="w-full px-2 py-1 rounded border border-gray-200 text-xs"
+                        placeholder="说明（选填）"
+                      />
+                    </div>
                   ) : (
                     <div className="flex-1 min-w-0">
                       <span className="text-sm font-medium text-gray-800">{item.name}</span>
                       <span className="text-[10px] text-gray-400 ml-2">{getCategoryName(item.category_id)}</span>
+                      {item.description && (
+                        <div className="text-[10px] text-gray-400 mt-0.5 truncate">{item.description}</div>
+                      )}
                     </div>
                   )}
 
