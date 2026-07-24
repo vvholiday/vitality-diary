@@ -80,7 +80,7 @@ export default function RegisterPage() {
           </div>
           <button
             type="submit"
-            disabled={loading || !email.trim() || !nickname.trim() || !password.trim()}
+            disabled={loading}
             className="w-full py-2.5 bg-emerald-500 text-white rounded-xl font-medium hover:bg-emerald-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-sm"
           >
             {loading ? '注册中...' : '注册并开始打卡'}

@@ -67,7 +67,7 @@ export default function LoginPage() {
           </div>
           <button
             type="submit"
-            disabled={loading || !email.trim() || !password.trim()}
+            disabled={loading}
             className="w-full py-2.5 bg-emerald-500 text-white rounded-xl font-medium hover:bg-emerald-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-sm"
           >
             {loading ? '登录中...' : '登录'}
