@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useAuth } from '@/lib/auth-context';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -9,18 +9,23 @@ export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const { login, loading: authLoading } = useAuth();
+  const { login } = useAuth();
   const [errorMsg, setErrorMsg] = useState('');
   const router = useRouter();
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const fd = new FormData(e.currentTarget as HTMLFormElement);
-    const emailVal = (fd.get('email') as string) || '';
-    if (!emailVal.trim()) return;
+    const emailVal = emailRef.current?.value || '';
+    const passwordVal = passwordRef.current?.value || '';
+    if (!emailVal.trim() || !passwordVal.trim()) {
+      setErrorMsg('请填写邮箱和密码');
+      return;
+    }
     setErrorMsg('');
     setLoading(true);
-    const error = await login(emailVal, (fd.get('password') as string) || '');
+    const error = await login(emailVal, passwordVal);
     setLoading(false);
     if (error) {
       setErrorMsg(error);
