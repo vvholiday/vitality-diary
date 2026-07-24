@@ -52,7 +52,7 @@ export default function LoginPage() {
             <label className="block text-sm font-medium text-gray-700 mb-1.5">邮箱</label>
             <input
               type="email"
-              value={email}
+              defaultValue=""
               onChange={(e) => setEmail(e.target.value)}
               placeholder="请输入邮箱"
               className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 outline-none transition-all text-sm"
@@ -63,7 +63,7 @@ export default function LoginPage() {
             <label className="block text-sm font-medium text-gray-700 mb-1.5">密码</label>
             <input
               type="password"
-              value={password}
+              defaultValue=""
               onChange={(e) => setPassword(e.target.value)}
               placeholder="请输入密码"
               className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 outline-none transition-all text-sm"
